@@ -1,5 +1,8 @@
+import 'package:evently/core/theme/app_theme.dart';
+import 'package:evently/screens/create_event_screen.dart';
 import 'package:evently/tabs/profile/profile_tab.dart';
 import "package:evently/tabs/home/home_tab.dart";
+import "package:evently/tabs/favorite/favorite_tab.dart";
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,12 +21,12 @@ class _HomeScreenState extends State<HomeScreen>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: tabs[currentIndex],
+      body: SafeArea(child: tabs[currentIndex]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
           onTap: (index){
           if (currentIndex == index) return;
-          currentIndex==index;
+          currentIndex=index;
           setState(() {});
           },
           items:
@@ -43,8 +46,16 @@ class _HomeScreenState extends State<HomeScreen>{
             icon: NavBarIcon(iconName:'profile'),
             activeIcon: NavBarIcon(iconName:'profile_active'),
           ),
+        ],
+      ),
+        floatingActionButton:FloatingActionButton(onPressed:
+        (){Navigator.of(context).pushNamed(CreateEventScreen.routeName);
+        },
+          child: Icon(Icons.add,size: 28,),
+        ),
 
-      ]),
+
     );
+
   }
 }

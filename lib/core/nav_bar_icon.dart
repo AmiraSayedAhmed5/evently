@@ -3,8 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class NavBarIcon extends StatelessWidget {
   final String iconName;
+  final Color? color;
 
- const NavBarIcon({super .key ,required this.iconName});
+ const NavBarIcon({super .key ,required this.iconName, this.color});
 
   @override
   Widget build(BuildContext context) {

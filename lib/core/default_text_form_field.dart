@@ -1,0 +1,63 @@
+import 'package:evently/core/theme/app_theme.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+class DefaultTextFormField extends StatefulWidget {
+  String hintText;
+  TextEditingController? controller;
+  String? prefixIconImageName;
+  String? suffixIconImageName;
+  void Function (String)? onChange;
+  bool isPassword ;
+  String? Function(String?)? validator;
+  DefaultTextFormField({
+    required this.hintText,
+    this.controller,
+    this.onChange,this .prefixIconImageName,
+    this.suffixIconImageName,
+    this.isPassword=false,
+  this .validator,});
+
+  @override
+  State<DefaultTextFormField> createState() => _DefaultTextFormFieldState();
+}
+
+class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
+ late bool isObscure=widget.isPassword;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      decoration:InputDecoration(hintText: widget.hintText,
+          prefixIcon: widget.prefixIconImageName==null
+          ?null
+          :SvgPicture.asset('assets/icons/${widget.prefixIconImageName}.svg' ,
+            height:24,
+            width:24,
+            fit: .scaleDown,),
+      suffixIcon:
+      widget.isPassword ?IconButton(onPressed:(){
+        isObscure =!isObscure;
+        setState(() {});
+      }, icon:Icon(
+        isObscure ? Icons.visibility_outlined :
+          Icons.visibility_off_outlined,
+      color: AppTheme.grey,),
+
+      )
+     : widget.suffixIconImageName==null
+            ?null
+            :SvgPicture.asset('assets/icons/${widget.prefixIconImageName}.svg',
+        height:24,
+        width:24,
+        fit: .scaleDown,)
+      ),
+      controller: widget.controller,
+      onChanged:widget.onChange ,
+    obscureText:isObscure,
+      validator:widget.validator,
+      autovalidateMode: .onUserInteraction,
+      onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
+    );
+  }
+}
